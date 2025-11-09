@@ -8,13 +8,13 @@ import (
 	"os"
 	"strings"
 
-	yup "github.com/gloo-foo/framework"
+	gloo "github.com/gloo-foo/framework"
 )
 
-type command yup.Inputs[string, flags]
+type command gloo.Inputs[string, flags]
 
-func Diff(parameters ...any) yup.Command {
-	cmd := command(yup.Initialize[string, flags](parameters...))
+func Diff(parameters ...any) gloo.Command {
+	cmd := command(gloo.Initialize[string, flags](parameters...))
 	if cmd.Flags.UnifiedContext == 0 && bool(cmd.Flags.Unified) {
 		cmd.Flags.UnifiedContext = 3
 	}
@@ -24,7 +24,7 @@ func Diff(parameters ...any) yup.Command {
 	return cmd
 }
 
-func (p command) Executor() yup.CommandExecutor {
+func (p command) Executor() gloo.CommandExecutor {
 	return func(ctx context.Context, stdin io.Reader, stdout, stderr io.Writer) error {
 		// Need two file paths to compare
 		if len(p.Positional) < 2 {
